@@ -1,0 +1,86 @@
+<div class="text-center">
+  <h1 class="title">Recherche par ville</h1>
+    <mat-form-field>
+      <mat-label>Ville du centre</mat-label>
+      <input matInput [(ngModel)]="searchInput">
+    </mat-form-field>
+    <button style="color:white" mat-button class="button" (click)="searchByCity()">Recherche par ville</button>
+    <button style="color:white" mat-button class="button" (click)="getAllCenters()">Tout les centres</button>
+    <button style="color:white" mat-button class="button" (click)="toggleAddCenterForm()">Ajouter un centre</button>
+
+    
+
+</div>
+<div class="centered-message" *ngIf="noInputMessage">Aucune ville saisie</div>
+<div *ngIf="modificationMessage" class="centered-message">{{ modificationMessage }}</div>
+
+<div *ngIf="deletionMessage" class="centered-message">{{ deletionMessage }}</div>
+<div *ngIf="addMessage" class="centered-message">{{ addMessage }}</div>
+
+
+
+
+
+<div>
+  <ng-container *ngIf="isAddingCenter">
+    <form [formGroup]="addCenterForm" (ngSubmit)="addCenter()" class="add-center-form">
+      <mat-form-field>
+        <mat-label>Nom du centre</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Ville du centre</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Adresse du centre</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+
+      <button mat-button type="submit" class="button">Ajouter le centre</button>
+    </form>
+  </ng-container>
+</div>
+
+
+<mat-card *ngFor="let center of vaccinationCenters">
+  <div class="card">
+    <mat-card-header>
+      <mat-card-title>Nom du centre : {{ center?.name || 'No Name' }}</mat-card-title>
+      <mat-card-title>Ville du centre : {{ center?.city || 'No City' }}</mat-card-title>
+      <mat-card-title>Adresse du centre : {{ center?.address || 'No Address' }}</mat-card-title>
+
+    </mat-card-header>
+    
+    <mat-card-actions>
+      <button  class= "action_button" style="color:white" mat-button (click)="selectCenterForModification(center)">Modifier</button>
+      <button class= "action_button" style="color:white"mat-button (click)="deleteCenter(center.id)">Supprimer</button>
+    </mat-card-actions>
+
+    <ng-container *ngIf="selectedCenter === center">
+      <form [formGroup]="modificationForm" (ngSubmit)="submitModification()">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city">
+        </mat-form-field>
+
+        <button mat-button type="submit">Modifier</button>
+      </form>
+    </ng-container>
+  </div>
+</mat-card>
+<div *ngIf="noCentersFound" style="margin-top:20px;" class="centered-message">
+  Aucun centre trouvé.
+</div>
