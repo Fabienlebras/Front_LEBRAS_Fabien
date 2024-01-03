@@ -1,10 +1,10 @@
 <div class="text-center">
   <br><br>
-  <button style="color:white" mat-button class="button" (click)="toggleAddDoctorForm()">Ajouter un docteur</button>
+  <button style="color:white" mat-button class="button" (click)="toggleAddAdministratorForm()">Ajouter un administrateur</button>
 </div>
 <div>
-  <ng-container *ngIf="isAddingDoctor">
-    <form [formGroup]="addDoctorForm" (ngSubmit)="addDoctor()" class="add-center-form">
+  <ng-container *ngIf="isAddingAdmninistrator">
+    <form [formGroup]="addAdmninistratorForm" (ngSubmit)="addAdministrator()" class="add-center-form">
       <mat-form-field>
         <mat-label>Prénom</mat-label>
         <input matInput formControlName="firstName">
@@ -37,24 +37,23 @@
     
   </ng-container>
 </div>
-<mat-card *ngFor="let doctor of doctors">
+<mat-card *ngFor="let administrator of admninistrators">
   <div class="card">
     <mat-card-header>
-      <mat-card-title>Prénom : {{ doctor?.firstName || 'No Name' }}</mat-card-title>
-      <mat-card-title>Nom de famille : {{ doctor?.lastName || 'No City' }}</mat-card-title>
-      <mat-card-title>mail : {{ doctor?.mail || 'No Address' }}</mat-card-title>
-      <mat-card-title>Numéro de téléphone : {{ doctor?.phone || 'No Address' }}</mat-card-title>
-      <mat-card-title>Nom du centre : {{ doctor?.vaccinationCenter?.name }}</mat-card-title>
+      <mat-card-title>Prénom : {{ administrator?.firstName || 'No Name' }}</mat-card-title>
+      <mat-card-title>Nom de famille : {{ administrator?.lastName || 'No City' }}</mat-card-title>
+      <mat-card-title>mail : {{ administrator?.mail || 'No Address' }}</mat-card-title>
+      <mat-card-title>Numéro de téléphone : {{ administrator?.phone || 'No Address' }}</mat-card-title>
       
     </mat-card-header>
     
     <mat-card-actions>
-      <button  class= "action_button" (click)="selectDoctorForModification(doctor)" style="color:white" mat-button>Modifier</button>
-      <button class= "action_button" (click)="deleteDoctor(doctor.id)" style="color:white"mat-button >Supprimer</button>
+      <button  class= "action_button" (click)="selectCenterForModification(administrator)" style="color:white" mat-button>Modifier</button>
+      <button class= "action_button" (click)="deleteCenter(administrator.id)" style="color:white"mat-button >Supprimer</button>
     </mat-card-actions>
     
     
-    <ng-container *ngIf="selectedDoctor=== doctor">
+    <ng-container *ngIf="selectedAdmin=== administrator">
       <form [formGroup]="modificationForm" (ngSubmit)="submitModification()">
         <mat-form-field>
           <mat-label>Prénom</mat-label>

@@ -1,0 +1,72 @@
+
+
+<div class="text-center">
+    <br><br>
+    <button style="color:white" mat-button class="button" (click)="toggleAddVaccinForm()">Ajouter un vaccin</button>
+     </div>
+     <div>
+        <ng-container *ngIf="isAddingVaccination">
+          <form [formGroup]="addVaccinationForm" (ngSubmit)="addVaccin()" class="add-center-form">
+            <mat-form-field>
+                <mat-label>Patient</mat-label>
+                <mat-select formControlName="selectedPatient">
+                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                        {{ patient.firstName + ' ' + patient.lastName }}
+                      </mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+           
+              <mat-form-field>
+                 <mat-label>Date</mat-label>
+                 <input matInput [matDatepicker]="picker" formControlName="registrationDate">
+                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                 <mat-datepicker #picker></mat-datepicker>
+               </mat-form-field>
+               
+               <mat-form-field>
+                <mat-label>Docteur</mat-label>
+                <mat-select formControlName="selectedDoctor">
+                  <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+                    {{ doctor.firstName + doctor.lastName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+               <mat-form-field>
+                <mat-label>Validation</mat-label>
+                <mat-select formControlName="Validate">
+                  <mat-option value="true">Validé</mat-option>
+                  <mat-option value="false">Pas encore validé</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <button mat-button type="submit" class="button">Ajouter le vaccin</button>
+          </form>
+          
+        </ng-container>
+      </div>
+
+<mat-card *ngFor="let vaccination of vaccinations">
+    <div class="card">
+      <mat-card-header>
+        <mat-card-title>Prénom : {{ vaccination?.patient?.firstName || 'No Name' }}</mat-card-title>
+        <mat-card-title>Nom : {{ vaccination?.patient?.lastName || 'No Name' }}</mat-card-title>
+        <mat-card-title>Date de vaccination : {{ vaccination?.vaccinationDate || 'No Name' }}</mat-card-title>
+        <mat-card-title>Nom du docteur {{vaccination.doctor.firstName + ' ' + vaccination.doctor.lastName }}</mat-card-title>
+
+        <mat-card-title>
+            Etat du vaccin:
+            <span *ngIf="vaccination?.validate; else notValidated">Validé</span>
+            <ng-template #notValidated>Pas encore validé</ng-template>
+          </mat-card-title>
+
+      </mat-card-header>
+      
+      <mat-card-actions>
+        <button  class= "action_button"  (click)="Validate(vaccination)" style="color:white" mat-button>Valider</button>
+        <button class= "action_button"  (click)="deleteVaccin(vaccination.id)"style="color:white"mat-button >Supprimer</button>
+      </mat-card-actions>
+
+
+      
+    </div>
+  </mat-card>

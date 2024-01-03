@@ -1,10 +1,13 @@
 <div class="text-center">
   <br><br>
-  <button style="color:white" mat-button class="button" (click)="toggleAddDoctorForm()">Ajouter un docteur</button>
+  <button style="color:white" mat-button class="button" (click)="toggleAddPatientForm()">Ajouter un patient</button>
+  
+  
+  
 </div>
 <div>
-  <ng-container *ngIf="isAddingDoctor">
-    <form [formGroup]="addDoctorForm" (ngSubmit)="addDoctor()" class="add-center-form">
+  <ng-container *ngIf="isAddingPatient">
+    <form [formGroup]="addPatientForm" (ngSubmit)="addPatient()" class="add-center-form">
       <mat-form-field>
         <mat-label>Prénom</mat-label>
         <input matInput formControlName="firstName">
@@ -25,36 +28,35 @@
         <input matInput formControlName="phone">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Centre de vaccination</mat-label>
-        <mat-select formControlName="selectedCenter">
-          <mat-option *ngFor="let center of vaccinationCenters" [value]="center.id">
-            {{ center.name }}
-          </mat-option>
-        </mat-select>
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="registrationDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      
       <button mat-button type="submit" class="button">Ajouter l'administrateur</button>
     </form>
     
   </ng-container>
 </div>
-<mat-card *ngFor="let doctor of doctors">
+<mat-card *ngFor="let patient of patients">
   <div class="card">
     <mat-card-header>
-      <mat-card-title>Prénom : {{ doctor?.firstName || 'No Name' }}</mat-card-title>
-      <mat-card-title>Nom de famille : {{ doctor?.lastName || 'No City' }}</mat-card-title>
-      <mat-card-title>mail : {{ doctor?.mail || 'No Address' }}</mat-card-title>
-      <mat-card-title>Numéro de téléphone : {{ doctor?.phone || 'No Address' }}</mat-card-title>
-      <mat-card-title>Nom du centre : {{ doctor?.vaccinationCenter?.name }}</mat-card-title>
+      <mat-card-title>Prénom : {{ patient?.firstName || 'No Name' }}</mat-card-title>
+      <mat-card-title>Nom de famille : {{ patient?.lastName || 'No City' }}</mat-card-title>
+      <mat-card-title>mail : {{ patient?.mail || 'No Address' }}</mat-card-title>
+      <mat-card-title>Numéro de téléphone : {{ patient?.phone || 'No phone' }}</mat-card-title>
+      
       
     </mat-card-header>
     
     <mat-card-actions>
-      <button  class= "action_button" (click)="selectDoctorForModification(doctor)" style="color:white" mat-button>Modifier</button>
-      <button class= "action_button" (click)="deleteDoctor(doctor.id)" style="color:white"mat-button >Supprimer</button>
+      <button  class= "action_button" (click)="selectPatientForModification(patient)" style="color:white" mat-button>Modifier</button>
+      <button class= "action_button" (click)="deletePatient(patient.id)" style="color:white"mat-button >Supprimer</button>
     </mat-card-actions>
     
     
-    <ng-container *ngIf="selectedDoctor=== doctor">
+    <ng-container *ngIf="selectedPatient=== patient">
       <form [formGroup]="modificationForm" (ngSubmit)="submitModification()">
         <mat-form-field>
           <mat-label>Prénom</mat-label>
@@ -75,18 +77,14 @@
           <mat-label>Téléphone</mat-label>
           <input matInput formControlName="phone">
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Centre de vaccination</mat-label>
-          <mat-select formControlName="selectedCenter">
-            <mat-option *ngFor="let center of vaccinationCenters" [value]="center.id">
-              {{ center.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        
         
         <button mat-button type="submit">Modifier</button>
       </form>
     </ng-container>
   </div>
 </mat-card>
+
+
+
 

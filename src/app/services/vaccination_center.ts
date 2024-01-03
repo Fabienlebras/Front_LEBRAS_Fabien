@@ -1,9 +1,7 @@
-// Exemple de service Angular utilisant HttpClient
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VaccinationCenter } from '../models/vaccination-center.model'; 
-import { HttpHeaders, HttpStatusCode } from '@angular/common/http';
 
 
 
@@ -19,6 +17,10 @@ export class VaccinationCentersService {
     getVaccinationCenters(): Observable<VaccinationCenter[]> {
       return this.http.get<VaccinationCenter[]>(this.apiUrl+"All-center");
     }
+
+      
+
+    
     getVaccinationCentersByCity(city: string): Observable<VaccinationCenter[]> {
         return this.http.get<VaccinationCenter[]>(this.apiUrl + 'bycity/' + city);
       }
@@ -28,8 +30,6 @@ export class VaccinationCentersService {
         let data;
         let requestbody={};
         data = name+'&&'+address+'&&'+city;
-        console.log(data);
-        console.log(this.apiUrl+'addcenter/'+data);
         return this.http.post(this.apiUrl + 'addcenter/'+data,requestbody);
     }
 
@@ -44,4 +44,6 @@ export class VaccinationCentersService {
         
         return this.http.post(this.apiUrl + 'updatecenter/' + data, {});
       }
+
+      
 }

@@ -1,0 +1,35 @@
+<div class="login-container">
+  <form *ngIf="!isRegistering" (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
+    <mat-form-field class="form-field">
+      <mat-label>Email:</mat-label>
+      <input matInput type="email" id="email" name="email" [(ngModel)]="user.email" required>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Password:</mat-label>
+      <input matInput type="password" id="password" name="password" [(ngModel)]="user.password" required>
+    </mat-form-field>
+
+    <br><br>
+
+    <button mat-raised-button color="primary" style= "margin-right:20px" type="submit">Login</button>
+    <button mat-raised-button color="primary" (click)="toggleRegistrationForm()" type="button">Création d'un compte</button>
+  </form>
+
+  <form *ngIf="isRegistering" (ngSubmit)="onRegister()" #registerForm="ngForm" class="register-form">
+    <mat-form-field class="form-field">
+      <mat-label>Email:</mat-label>
+      <input matInput type="email" id="registerEmail" name="registerEmail" [(ngModel)]="registrationUser.email" required>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Password:</mat-label>
+      <input matInput type="password" id="registerPassword" name="registerPassword" [(ngModel)]="registrationUser.password" required>
+    </mat-form-field>
+
+    <br><br>
+
+    <button mat-raised-button color="primary" style= "margin-right:20px" type="submit">Inscription</button>
+    <button mat-raised-button color="primary" (click)="toggleRegistrationForm()" type="button">Annuler</button>
+  </form>
+</div>
